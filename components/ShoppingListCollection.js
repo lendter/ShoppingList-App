@@ -22,9 +22,9 @@ export default function ShoppingListCollection(){
       <Box sx={{ width: "100%" }}>
         <Card sx={{width: "100%", height:"100vh", background: "whitesmoke"}}>
        <ButtonAppBar></ButtonAppBar>
-        <Stack sx={{position:"absolute", top: "65px"}}>
+        <Stack sx={{position:"absolute", top: "65px", width: "100%"}}>
           {data.map((e, index) => (
-            <ListItem key={index}><label>{e.name}</label></ListItem>
+            <ListItem sx={{fontSize: "2rem", border: "1px solid lightgrey" ,width: "100%"}} key={index}><label>{e.name}</label></ListItem>
           ))}
         </Stack>
         <ModalShoppingList></ModalShoppingList>
