@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Card, ListItem, Stack } from "@mui/material";
 import { StyleSheet, View } from "react-native-web";
 import ButtonAppBar from "./ButtonAppBar";
 import ShoppingListView from "./ShoppingListView";
@@ -7,33 +7,31 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function ShoppingListCollection(){
-  const [data, setData] = useState({});
+  const [data, setData] = useState([{id: "1", name: "Einkauf"}, {id: "2", name: "Einkaufsliste"}]);
+  const BASE_URL = "http://localhost:8080/api";
+  let shoppingList = window.localStorage.getItem("shoppingList");
+  var request = new XMLHttpRequest();
+  request.open("GET", BASE_URL + "/lists");
+  request.onload = function() {
+    setData(shoppingList);
+  }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'http://localhost:8080/api/lists',
-      );
-      setData(result.data);
-    };
-    fetchData();
-  }, []);
-
+  console.log("LISTS ARE EXISTENT");
   return (
     <View style={styles.container}>
-        <Box sx={{ width: "100%"}}>
-          <ButtonAppBar></ButtonAppBar>
-          <ul>
-            {Object.keys(data).forEach(function(e){
-              console.log(data);
-              console.log(data[e].name);
-              <li key={data[e].id}><label>{data[e].name}</label></li>
-            })}
-          </ul>
-          <ModalShoppingList></ModalShoppingList>
-        </Box>
-      </View>
-    )
+      <Box sx={{ width: "100%" }}>
+        <Card sx={{width: "100%", height:"100vh", background: "whitesmoke"}}>
+       <ButtonAppBar></ButtonAppBar>
+        <Stack sx={{position:"absolute", top: "65px"}}>
+          {data.map((e, index) => (
+            <ListItem key={index}><label>{e.name}</label></ListItem>
+          ))}
+        </Stack>
+        <ModalShoppingList></ModalShoppingList>
+        </Card>
+      </Box>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

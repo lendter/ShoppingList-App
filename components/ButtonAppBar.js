@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 export default function ButtonAppBar() {
   return (
-    <AppBar position="fixed">
+    <AppBar>
         <Toolbar>
           <IconButton
             size="large"
