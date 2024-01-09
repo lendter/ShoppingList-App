@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ShoppingListCollection from './components/ShoppingListCollection';
-import ItemListCollection from './components/ItemListCollection';
 import { StyleSheet, View } from 'react-native-web';
 import { Box, Card, ListItem, Stack } from '@mui/material';
 import ButtonAppBar from './components/ButtonAppBar';

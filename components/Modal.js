@@ -36,6 +36,7 @@ export default function ModalUnstyled() {
       request.setRequestHeader("Content-Type", "application/json");
       request.onload = function(res) {
           console.log(res);
+          window.location.reload();
       }
       request.send(JSON.stringify(body));
   }
