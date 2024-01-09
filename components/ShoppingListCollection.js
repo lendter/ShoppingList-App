@@ -7,16 +7,23 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function ShoppingListCollection(){
-  const [data, setData] = useState([{id: "1", name: "Einkauf"}, {id: "2", name: "Einkaufsliste"}]);
-  const BASE_URL = "http://localhost:8080/api";
-  let shoppingList = window.localStorage.getItem("shoppingList");
-  var request = new XMLHttpRequest();
-  request.open("GET", BASE_URL + "/lists");
-  request.onload = function() {
-    setData(shoppingList);
-  }
+  const [data, setData] = useState([]);
 
-  console.log("LISTS ARE EXISTENT");
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'http://localhost:8080/api/lists',
+      );
+      console.log(result);
+      let resultData = [];
+      Object.keys(result.data).forEach(function(e){
+        resultData.push(result.data[e]);
+      });
+      setData(resultData);
+    };
+
+    fetchData();
+  }, []);
   return (
     <View style={styles.container}>
       <Box sx={{ width: "100%" }}>
@@ -24,7 +31,7 @@ export default function ShoppingListCollection(){
        <ButtonAppBar></ButtonAppBar>
         <Stack sx={{position:"absolute", top: "65px", width: "100%"}}>
           {data.map((e, index) => (
-            <ListItem sx={{fontSize: "2rem", border: "1px solid lightgrey" ,width: "100%"}} key={index}><label>{e.name}</label></ListItem>
+            <ListItem onClick={() => setList(e.name)} sx={{fontSize: "2rem", border: "1px solid lightgrey" ,width: "100%"}} key={index}><label>{e.name}</label></ListItem>
           ))}
         </Stack>
         <ModalShoppingList></ModalShoppingList>
@@ -32,6 +39,11 @@ export default function ShoppingListCollection(){
       </Box>
     </View>
   );
+}
+
+function setList(listName){
+  window.localStorage.setItem("shoppingList", listName);
+  window.location.reload();
 }
 
 const styles = StyleSheet.create({

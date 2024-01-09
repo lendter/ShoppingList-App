@@ -1,29 +1,44 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import {useState} from 'react';
+import {forwardRef, useEffect, useState} from 'react';
 import { styled, css } from '@mui/system';
 import { Modal as BaseModal } from '@mui/base/Modal';
 import { Button, Fab, Input } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import axios from 'axios';
 
 export default function ModalUnstyled() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [listId, setListId] = useState(null);
   const BASE_URL = "http://localhost:8080/api";
-  const[value, setValue] = useState(""); 
-    function handle() {
-        var request = new XMLHttpRequest();
-        request.open("POST", BASE_URL + "/items", false);
-        var body = {
-            articleName : value,
-            list: "TODO"
-        }
-        request.setRequestHeader("Content-Type", "application/json");
-        request.onload = function(res) {
-            console.log(res);
-        }
-        request.send(JSON.stringify(body));
+  const[value, setValue] = useState("");
+
+  useEffect(() => {
+    const getListId = async () => {
+      let listName = window.localStorage.getItem("shoppingList");
+      const result = await axios(
+        'http://localhost:8080/api/list/name/'+ listName,
+      );
+      console.log(result);
+      setListId(result.data.id);
     }
+
+    getListId();
+  }, []);
+
+  function handle() {
+      var request = new XMLHttpRequest();
+      request.open("POST", BASE_URL + "/items", false);
+      var body = {
+          articleName : value,
+          list: listId
+      }
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onload = function(res) {
+          console.log(res);
+      }
+      request.send(JSON.stringify(body));
+  }
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -58,7 +73,7 @@ export default function ModalUnstyled() {
   );
 }
 
-const Backdrop = React.forwardRef((props, ref) => {
+const Backdrop = forwardRef((props, ref) => {
   const { open, className, ...other } = props;
   return (
     <div
