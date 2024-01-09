@@ -1,7 +1,7 @@
 import ConditionalRenderedComponent from './components/ConditionalRenderedComponent';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import EmptyShoppingListCollection from './components/EmptyShoppingListCollection';
+import ShoppingListCollection from './components/ShoppingListCollection';
 
 export default function App() {
   const [data, setData] = useState({ hits: [] });
@@ -21,12 +21,12 @@ export default function App() {
   return data? (
     <ul>
       {data.hits.map(item => (
-        <li key={item.objectID}>
-          <a href={item.url}>{item.title}</a>
+        <li key={item.id}>
+          <label>{item.name}</label>
         </li>
       ))}
     </ul>
   ):
-  (<EmptyShoppingListCollection></EmptyShoppingListCollection>);
+  (<ShoppingListCollection></ShoppingListCollection>);
   //return <ConditionalRenderedComponent></ConditionalRenderedComponent>
 }
