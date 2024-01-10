@@ -10,7 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 export default function ModalShoppingList() {
   const [open, setOpen] = React.useState(false);
   const BASE_URL = "http://localhost:8080/api";
-  const[value, setValue] = useState(""); 
+  const[value, setValue] = useState("");
     function handle() {
         var request = new XMLHttpRequest();
         request.open("POST", BASE_URL + "/list", false);
@@ -32,7 +32,7 @@ export default function ModalShoppingList() {
     <div>
       <Fab onClick={handleOpen} color="primary" aria-label='add' sx={{
           position: 'absolute',
-          bottom: 16,
+          bottom: 65,
           right: 16,
         }}>
         <AddIcon />
@@ -44,7 +44,7 @@ export default function ModalShoppingList() {
         onClose={handleClose}
         slots={{ backdrop: StyledBackdrop }}
       >
-        <ModalContent sx={{ width: 400 }}>
+        <ModalContent sx={{ width: "70%" }}>
           <h2 id="unstyled-modal-title" className="modal-title">
             Add List
           </h2>
@@ -63,7 +63,7 @@ const Backdrop = React.forwardRef((props, ref) => {
   return (
     <div
       className={clsx({ 'MuiBackdrop-open': open }, className)}
-      ref={ref}
+      ref={ref} 
       {...other}
     />
   );

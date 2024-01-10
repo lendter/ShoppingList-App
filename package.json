@@ -14,7 +14,7 @@
     "@expo/webpack-config": "^19.0.0",
     "@mui/icons-material": "^5.15.3",
     "@mui/material": "^5.15.3",
-    "@mui/styled-engine-sc": "^6.0.0-alpha.11",
+    "@mui/styled-engine-sc": "^5.14.12",
     "axios": "^1.6.5",
     "expo": "~49.0.15",
     "expo-status-bar": "~1.6.0",

@@ -1,10 +1,11 @@
-import { Box, Card, ListItem, Stack } from "@mui/material";
+import { Box, Card, IconButton, ListItem, Stack } from "@mui/material";
 import { StyleSheet, View } from "react-native-web";
 import ButtonAppBar from "./ButtonAppBar";
-import ShoppingListView from "./ShoppingListView";
 import ModalShoppingList from "./ModalShoppingList";
 import { useEffect, useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import SimpleBottomNavigation from "./SimpleBottomBar";
 
 export default function ShoppingListCollection(){
   const [data, setData] = useState([]);
@@ -31,10 +32,19 @@ export default function ShoppingListCollection(){
        <ButtonAppBar></ButtonAppBar>
         <Stack sx={{position:"absolute", top: "65px", width: "100%"}}>
           {data.map((e, index) => (
-            <ListItem onClick={() => setList(e.name)} sx={{fontSize: "2rem", border: "1px solid lightgrey" ,width: "100%"}} key={index}><label>{e.name}</label></ListItem>
+            <ListItem onClick={() => setList(e.name)} sx={{fontSize: "2rem", border: "1px solid lightgrey" ,width: "100%"}} key={index}><label>{e.name}</label><IconButton onClick={() => deleteList(e.id)} sx={
+              {
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "0"
+              }
+            } aria-label="delete">
+            <DeleteIcon />
+          </IconButton></ListItem>
           ))}
         </Stack>
         <ModalShoppingList></ModalShoppingList>
+        <SimpleBottomNavigation></SimpleBottomNavigation>
         </Card>
       </Box>
     </View>
@@ -44,6 +54,16 @@ export default function ShoppingListCollection(){
 function setList(listName){
   window.localStorage.setItem("shoppingList", listName);
   window.location.reload();
+}
+
+function deleteList(id){
+  var request = new XMLHttpRequest();
+  request.open("DELETE", "http://localhost:8080/api/list/"+id, false);
+  request.onload = function(res) {
+      console.log(res);
+      window.location.reload();
+  }
+  request.send();
 }
 
 const styles = StyleSheet.create({

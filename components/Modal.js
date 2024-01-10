@@ -48,7 +48,7 @@ export default function ModalUnstyled() {
     <div>
       <Fab onClick={handleOpen} color="primary" aria-label='add' sx={{
           position: 'absolute',
-          bottom: 16,
+          bottom: 65,
           right: 16,
         }}>
         <AddIcon />
@@ -60,7 +60,7 @@ export default function ModalUnstyled() {
         onClose={handleClose}
         slots={{ backdrop: StyledBackdrop }}
       >
-        <ModalContent sx={{ width: 400 }}>
+        <ModalContent sx={{ width: "70%" }}>
           <h2 id="unstyled-modal-title" className="modal-title">
             Add Item
           </h2>
